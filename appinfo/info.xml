@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
+    <!--
+    SPDX-FileCopyrightText: MindFabrik UG <support@mindfabrik.de>
+    SPDX-License-Identifier: CC0-1.0
+    -->
+    <id>ctfviewer</id>
+    <name>Ctf Viewer</name>
+    <summary>Viewer for Collaboration Tasks Files (.ctf)</summary>
+    <description><![CDATA[Viewer for Collaboration Tasks Files (.ctf)]]></description>
+    <version>0.0.1</version>
+    <licence>agpl</licence>
+    <author mail="support@mindfabrik.de" homepage="https://www.mindfabrik.de">MindFabrik UG</author>
+    <namespace>CtfViewer</namespace>
+    <category>organization</category>
+    <bugs>https://www.mindfabrik.de</bugs>
+    <dependencies>
+        <nextcloud min-version="24" max-version="24"/>
+    </dependencies>
+    <navigations>
+        <navigation>
+            <name>Ctf Viewer</name>
+            <route>ctfviewer.page.index</route>
+        </navigation>
+    </navigations>
+</info>
