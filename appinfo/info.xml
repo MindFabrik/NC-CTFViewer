@@ -6,10 +6,10 @@
     SPDX-License-Identifier: CC0-1.0
     -->
     <id>ctfviewer</id>
-    <name>Ctf Viewer</name>
+    <name>Collaboration Tasks Viewer</name>
     <summary>Viewer for Collaboration Tasks Files (.ctf)</summary>
     <description><![CDATA[Viewer for Collaboration Tasks Files (.ctf)]]></description>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
     <licence>agpl</licence>
     <author mail="support@mindfabrik.de" homepage="https://www.mindfabrik.de">MindFabrik UG</author>
     <namespace>CtfViewer</namespace>
@@ -18,10 +18,15 @@
     <dependencies>
         <nextcloud min-version="24" max-version="24"/>
     </dependencies>
+     <settings>  
+        <admin-section>OCA\CtfViewer\Settings\AdminSection</admin-section>
+        <admin>OCA\CtfViewer\Settings\AdminSettings</admin>	  
+	</settings>    
     <navigations>
         <navigation>
-            <name>Ctf Viewer</name>
+            <name>Aufgaben</name>
             <route>ctfviewer.page.index</route>
+            <icon>app.svg</icon>
         </navigation>
     </navigations>
 </info>
