@@ -1,5 +1,6 @@
 <?php
 
+/*
 \OC::$server->getNavigationManager()->add(function () {
     $urlGenerator = \OC::$server->getURLGenerator();
     return [
@@ -20,3 +21,4 @@
         'name' => \OC::$server->getL10N('ctfviewer')->t('ctftasks'),
     ];
 });
+*/

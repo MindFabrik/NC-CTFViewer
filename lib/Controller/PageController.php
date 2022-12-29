@@ -60,6 +60,7 @@ class PageController extends Controller {
 		}
 		$usrId = \OC::$server->getUserSession()->getUser()->getUID();
 		$params['username'] = $usrId;
+		$params['dateplaceholder'] = date("m/Y");
 
         if (!empty($token)) {
 

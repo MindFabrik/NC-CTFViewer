@@ -6,10 +6,10 @@
     SPDX-License-Identifier: CC0-1.0
     -->
     <id>ctfviewer</id>
-    <name>C T F Viewer</name>
+    <name>CTF Viewer (Kanzlei Aufgaben)</name>
     <summary>Editor for CTF Files</summary>
     <description><![CDATA[Editor for CTF Files]]></description>
-    <version>0.0.6</version>
+    <version>0.1.0</version>
     <licence>agpl</licence>
     <author mail="support@mindfabrik.de" homepage="https://www.mindfabrik.de">MindFabrik UG</author>
     <namespace>CTFViewer</namespace>
@@ -23,10 +23,5 @@
             <step>OCA\CTFViewer\Migration\RegisterMimeType</step>
         </install>
     </repair-steps>
-    <navigations>
-        <navigation>
-            <name>C T F Viewer</name>
-            <route>ctfviewer.page.index</route>
-        </navigation>
-    </navigations>
+   
 </info>

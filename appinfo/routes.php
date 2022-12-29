@@ -12,10 +12,6 @@ declare(strict_types=1);
  * it's instantiated in there
  */
 return [
-	'resources' => [
-		'note' => ['url' => '/notes'],
-		'note_api' => ['url' => '/api/0.1/notes']
-	],
 	'routes' => [
 		['name' => 'page#index', 'url' => '/', 'verb' => 'GET'],
 		['name' => 'page#edit', 'url' => '/edit', 'verb' => 'GET'],

@@ -18,6 +18,7 @@
   <input type="hidden" value="<?php p($_['token'])?>" id="fToken" />
   <input type="hidden" value="<?php p($_['editor'])?>" id="fEditor" />
   <input type="hidden" value="<?php p($_['username'])?>" id="fUsername" />
+  <input type="hidden" value="<?php p($_['dateplaceholder'])?>" id="fDatePlaceholder" />
 </div>
 <div class="container">
     <div class="row">
@@ -128,9 +129,16 @@
                     <div class="card-header">
                         Von Mandanten erledigt
                         <span class="badge rounded-pill text-bg-success" id="ctfCountReady">N/A</span>
+                        <div class="float-end">
+                            <a class="btn btn-outline-secondary btn-sm" data-bs-toggle="collapse" href="#collapseDone" role="button" aria-expanded="false" aria-controls="collapseDone">
+                            <div class="icon-toggle"></div>
+                            </a>
+                        </div>
                     </div>
+                <div class="collapse" id="collapseDone">
                 <div class="card-body">
                     <div id="tasksReady"></div>
+                </div>
                 </div>
             </div>
             <div class="mt-4">
@@ -175,17 +183,56 @@
 
 <!-- Modal to add new task -->
 <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Neue Aufgabe</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="input-group mb-3">
-            <span class="input-group-text" id="basic-addon1">Beschreibung</span>
-            <input type="text" class="form-control" placeholder="" aria-label="formTitle" id="formTitle" aria-describedby="basic-addon1">
+      
+      <div class="mt-1 mb-2">
+            <div class="btn-group" role="group" aria-label="">
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" value="Betrieb" checked>
+                <label class="btn btn-outline-secondary" for="btnradio1">Betrieb</label>
+
+                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off" value="Mitarbeiter">
+                <label class="btn btn-outline-secondary" for="btnradio2">Mitarbeiter</label>
+            </div>
         </div>
+
+        <div class="card" style="padding: 15px 15px 0px 15px">
+        <div class="input-group mb-3">
+            <span class="input-group-text w-25" id="basic-addon1">Beschreibung</span>
+            <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formTitle" id="formTitle" aria-describedby="basic-addon1">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text w-25" id="basic-addon2">Datum</span>
+            <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formTitle" id="formDate" aria-describedby="basic-addon2" value="<?php p($_['dateplaceholder'])?>">
+        </div>
+        </div>
+       
+        <div id="ctfMitarbeiterFields" class="card mt-2" style="padding: 15px 15px 0px 15px;display:none;">
+            <div class="input-group mb-3">
+                <span class="input-group-text w-25" id="basic-addon3">Pers.Nr.</span>
+                <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formTitle" id="formPN" aria-describedby="basic-addon3">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text w-25" id="basic-addon4">MA Name</span>
+                <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formTitle" id="formName" aria-describedby="basic-addon4">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text w-25" id="basic-addon5">MA Vorname</span>
+                <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formTitle" id="formVorname" aria-describedby="basic-addon5">
+            </div>
+        </div>
+        <div class="mt-2 card"  style="padding: 15px 15px 0px 15px;">
+            <div class="input-group mb-3">
+                <span class="input-group-text w-25" id="basic-addon6">Bemerkung</span>
+                <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formTitle" id="formDescription" aria-describedby="basic-addon6">
+            </div>            
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
@@ -201,17 +248,32 @@
         <div class="card" style="padding: 15px 15px 0px 15px;">
             <div class="cleanfix">
                 <div class="float-start">
-                    <p class="fs-6 ctfTaskTitle"></p>
+                    <p class="fs-5 ctfTaskTitle"></p>
+                    <div style="margin-top:-10px;">
+                        <span class="badge rounded-pill text-bg-secondary mb-2 ctfTaskType">Unknown</span>
+                        <span class="ctfTaskDate"></span>
+                    </div>
+                    <div>
+                    <p class="fw-light ctfTaskDescription"></p>
+                    </div>
                 </div>
                 <div class="float-end" style="margin-top:-6px;">
                    <button class="btn btn-outline-secondary btn-sm ctfBtnDone" data-ctfaction="done">
                         <div class="icon-checkmark"></div>
                     </button>
+                    <button class="btn btn-outline-secondary btn-sm ctfBtnUndo" data-ctfaction="undo">
+                        <div class="icon-history"></div>
+                    </button>
                     <button class="btn btn-outline-secondary btn-sm ctfBtnRemove" data-ctfaction="remove">
                         <div class="icon-delete"></div>
                     </button>
                 </div>
-            </div> 
+            </div>
+            <div class="card mb-2" style="padding: 15px 15px 0px 15px;">
+                <small style="color:gray;">
+                    <p class="ctfMetadata"></p>
+                </small>
+            </div>
         </div>
     </div>
 </template>
