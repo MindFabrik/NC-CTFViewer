@@ -412,7 +412,7 @@ function applyViewFilter() {
 // **************************************
 function ctfBtnHandlerDone(taskId) {
 
-    var json = serverData;
+    let json = JSON.parse(JSON.stringify(serverData));
 
     // Find pos in tasklist
     var index = json.taskList.findIndex(function(item, i){
@@ -429,7 +429,7 @@ function ctfBtnHandlerDone(taskId) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     const timeStr = currentDate.toLocaleDateString('de-DE', options);
 
-    var formText = "";
+    let formText = "";
     if (json.taskList[index].status === 1) {
         json.taskList[index].doneBy = $("#fUsername").val();
         json.taskList[index].doneAt = timeStr;
@@ -459,7 +459,7 @@ function ctfBtnHandlerDone(taskId) {
         },
         (result) => {
             
-            if (!result) {return;}
+            if (!result) {json=""; return;}
            
             // Populate
             serverData = json;
@@ -477,10 +477,10 @@ function ctfBtnHandlerDone(taskId) {
 // **************************************
 function ctfBtnHandlerUndo(taskId) {
 
-    var json = serverData;
+    let json = JSON.parse(JSON.stringify(serverData));
 
     // Find pos in tasklist
-    var index = json.taskList.findIndex(function(item, i){
+    let index = json.taskList.findIndex(function(item, i){
         return item.id === taskId;
     });
 
@@ -494,7 +494,7 @@ function ctfBtnHandlerUndo(taskId) {
     const options = { year: 'numeric', month: 'short', day: 'numeric' };
     const timeStr = currentDate.toLocaleDateString('de-DE', options);
 
-    var formText = "";
+    let formText = "";
     if (json.taskList[index].status === 1) {
         json.taskList[index].doneBy = $("#fUsername").val();
         json.taskList[index].doneAt = timeStr;
@@ -526,7 +526,7 @@ function ctfBtnHandlerUndo(taskId) {
         },
         (result) => {
             
-            if (!result) {return;}
+            if (!result) {json = ""; return;}
            
             // Populate
             serverData = json;
@@ -544,10 +544,10 @@ function ctfBtnHandlerUndo(taskId) {
 // **************************************
 function ctfBtnHandlerRemove(taskId) {
     
-    const json = serverData;
+    let json = JSON.parse(JSON.stringify(serverData));
 
     // Find pos in tasklist
-    var index = json.taskList.findIndex(function(item, i){
+    let index = json.taskList.findIndex(function(item, i){
         return item.id === taskId;
     });
 
@@ -562,7 +562,7 @@ function ctfBtnHandlerRemove(taskId) {
         },
         (result) => {
             
-            if (!result) {return;}
+            if (!result) {json=""; return;}
 
             // Remove Entry
             json.taskList.splice(index, 1);            
