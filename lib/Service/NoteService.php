@@ -3,15 +3,15 @@ declare(strict_types=1);
 // SPDX-FileCopyrightText: MindFabrik UG <support@mindfabrik.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace OCA\CtfViewer\Service;
+namespace OCA\CTFViewer\Service;
 
 use Exception;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 use OCP\AppFramework\Db\MultipleObjectsReturnedException;
 
-use OCA\CtfViewer\Db\Note;
-use OCA\CtfViewer\Db\NoteMapper;
+use OCA\CTFViewer\Db\Note;
+use OCA\CTFViewer\Db\NoteMapper;
 
 class NoteService {
 	private NoteMapper $mapper;

@@ -1,6 +1,6 @@
 {
 	"name": "nextcloud/ctfviewer",
-	"description": "Viewer for Collaboration Tasks Files (.ctf)",
+	"description": "Editor for CTF Files",
 	"type": "project",
 	"license": "AGPL-3.0-or-later",
 	"authors": [

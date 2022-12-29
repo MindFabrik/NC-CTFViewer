@@ -6,27 +6,27 @@
     SPDX-License-Identifier: CC0-1.0
     -->
     <id>ctfviewer</id>
-    <name>Collaboration Tasks Viewer</name>
-    <summary>Viewer for Collaboration Tasks Files (.ctf)</summary>
-    <description><![CDATA[Viewer for Collaboration Tasks Files (.ctf)]]></description>
-    <version>0.0.2</version>
+    <name>C T F Viewer</name>
+    <summary>Editor for CTF Files</summary>
+    <description><![CDATA[Editor for CTF Files]]></description>
+    <version>0.0.6</version>
     <licence>agpl</licence>
     <author mail="support@mindfabrik.de" homepage="https://www.mindfabrik.de">MindFabrik UG</author>
-    <namespace>CtfViewer</namespace>
-    <category>organization</category>
+    <namespace>CTFViewer</namespace>
+    <category>files</category>
     <bugs>https://www.mindfabrik.de</bugs>
     <dependencies>
-        <nextcloud min-version="24" max-version="24"/>
+        <nextcloud min-version="24" max-version="28"/>
     </dependencies>
-     <settings>  
-        <admin-section>OCA\CtfViewer\Settings\AdminSection</admin-section>
-        <admin>OCA\CtfViewer\Settings\AdminSettings</admin>	  
-	</settings>    
+      <repair-steps>
+        <install>
+            <step>OCA\CTFViewer\Migration\RegisterMimeType</step>
+        </install>
+    </repair-steps>
     <navigations>
         <navigation>
-            <name>Aufgaben</name>
+            <name>C T F Viewer</name>
             <route>ctfviewer.page.index</route>
-            <icon>app.svg</icon>
         </navigation>
     </navigations>
 </info>

@@ -1,6 +1,6 @@
 {
   "name": "ctfviewer",
-  "description": "Viewer for Collaboration Tasks Files (.ctf)",
+  "description": "Editor for CTF Files",
   "version": "0.0.1",
   "author": "MindFabrik UG <support@mindfabrik.de>",
   "contributors": [],

@@ -3,16 +3,16 @@ declare(strict_types=1);
 // SPDX-FileCopyrightText: MindFabrik UG <support@mindfabrik.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace OCA\CtfViewer\Tests\Unit\Controller;
+namespace OCA\CTFViewer\Tests\Unit\Controller;
 
 use PHPUnit\Framework\TestCase;
 
 use OCP\AppFramework\Http;
 use OCP\IRequest;
 
-use OCA\CtfViewer\Service\NoteNotFound;
-use OCA\CtfViewer\Service\NoteService;
-use OCA\CtfViewer\Controller\NoteController;
+use OCA\CTFViewer\Service\NoteNotFound;
+use OCA\CTFViewer\Service\NoteService;
+use OCA\CTFViewer\Controller\NoteController;
 
 class NoteControllerTest extends TestCase {
 	protected NoteController $controller;

@@ -3,10 +3,10 @@ declare(strict_types=1);
 // SPDX-FileCopyrightText: MindFabrik UG <support@mindfabrik.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace OCA\CtfViewer\Controller;
+namespace OCA\CTFViewer\Controller;
 
-use OCA\CtfViewer\AppInfo\Application;
-use OCA\CtfViewer\Service\NoteService;
+use OCA\CTFViewer\AppInfo\Application;
+use OCA\CTFViewer\Service\NoteService;
 use OCP\AppFramework\Controller;
 use OCP\AppFramework\Http\DataResponse;
 use OCP\IRequest;

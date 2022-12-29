@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: MindFabrik UG <support@mindfabrik.de>
 SPDX-License-Identifier: CC0-1.0
 -->
 
-# Ctf Viewer
+# C T F Viewer
 Place this app in **nextcloud/apps/**
 
 ## Building the app

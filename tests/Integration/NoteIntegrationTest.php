@@ -3,15 +3,15 @@ declare(strict_types=1);
 // SPDX-FileCopyrightText: MindFabrik UG <support@mindfabrik.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace OCA\CtfViewer\Tests\Integration\Controller;
+namespace OCA\CTFViewer\Tests\Integration\Controller;
 
 use OCP\AppFramework\App;
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
 
-use OCA\CtfViewer\Db\Note;
-use OCA\CtfViewer\Db\NoteMapper;
-use OCA\CtfViewer\Controller\NoteController;
+use OCA\CTFViewer\Db\Note;
+use OCA\CTFViewer\Db\NoteMapper;
+use OCA\CTFViewer\Controller\NoteController;
 
 class NoteIntegrationTest extends TestCase {
 	private NoteController $controller;

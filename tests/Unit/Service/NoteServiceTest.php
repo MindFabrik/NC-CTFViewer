@@ -3,16 +3,16 @@ declare(strict_types=1);
 // SPDX-FileCopyrightText: MindFabrik UG <support@mindfabrik.de>
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-namespace OCA\CtfViewer\Tests\Unit\Service;
+namespace OCA\CTFViewer\Tests\Unit\Service;
 
-use OCA\CtfViewer\Service\NoteNotFound;
+use OCA\CTFViewer\Service\NoteNotFound;
 use PHPUnit\Framework\TestCase;
 
 use OCP\AppFramework\Db\DoesNotExistException;
 
-use OCA\CtfViewer\Db\Note;
-use OCA\CtfViewer\Service\NoteService;
-use OCA\CtfViewer\Db\NoteMapper;
+use OCA\CTFViewer\Db\Note;
+use OCA\CTFViewer\Service\NoteService;
+use OCA\CTFViewer\Db\NoteMapper;
 
 class NoteServiceTest extends TestCase {
 	private NoteService $service;
