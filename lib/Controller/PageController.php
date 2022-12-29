@@ -116,6 +116,11 @@ class PageController extends Controller {
         $fileInfo = $this->userView->getFileInfo($file);
 		$content = $this->userView->file_get_contents($file);
 
+		//if content = 0
+		if (strlen($content) < 2) {
+			$content = '{"remark":"BITTE ÖFFNEN SIE DIESE DATEI IN DER CLOUD OBERFLÄCHE","ctf_schema_version":1,"title":"Fehlende Lohn-Abrechnungsinformationen","lastModifiedMandant":"","lastEditorMandant":"","lastModifiedKanzlei":"","lastEditorKanzlei":"","taskList":[]}';
+		} 
+
 		if (str_contains($content,"ctf_schema_version")) {
 			$params = array(
 				'result' => 'OK',

@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#modalSaveBtn").click(function() {
         saveModalData();
     });
+    $("#btnCftSaveMetadata").click(function() {
+        saveMetadata();
+    });
     $("#btnCloseForm").click(function() {
         closeViewer();
     });
@@ -115,6 +118,16 @@ function cleanModalData() {
     $("#formVorname").val("");
     $("#btnradio1").prop("checked", true);
     $("#ctfMitarbeiterFields").hide();
+}
+
+// *******************************************
+// Save Metadata
+// *******************************************
+function saveMetadata() {
+    serverData.title = $("#formMDTitle").val();
+    populateData();
+    setctf();
+    $('#editModal').modal('hide');
 }
 
 // *******************************************
@@ -242,6 +255,7 @@ function populateData() {
     
     // Build Header Information
     $("#ctfTitle").text(json.title);
+    $("#formMDTitle").val(json.title);
     if (json.lastModifiedMandant == null) {
         $("#lastModifiedMandant").html("N/A");
     }

@@ -42,7 +42,17 @@
             <!-- Title -->
             <div class="row">
                 <div>
-                    <p class="fs-2" id="ctfTitle"></p>
+                    <div class="float-start">
+                        <p class="fs-2" id="ctfTitle"></p>
+                    </div>
+                    <?php if ($_['editor'] == "YES") { ?> 
+                    <div class="float-end">
+                        <button type="button" class="btn btn-light btn-sm" id="btnCtfTitleEdit" data-bs-toggle="modal" data-bs-target="#editModal">
+                            <div class="icon-comment">
+                            </div>    
+                        </button>
+                    </div> 
+                    <?php } ?>
                 </div>
             </div>
 
@@ -78,7 +88,7 @@
                 <div class="col-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title <?php if ($_['editor'] == "YES") { ?>icon-tag <?php } ?>">Kanzlei</h5>
+                            <h5 class="card-title <?php if ($_['editor'] == "YES") { ?>icon-tag <?php } ?>">Steuerkanzlei</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Bearbeitunsstand</h6>
                             <p class="card-text">
                                 <div class="fw-light">
@@ -182,7 +192,7 @@
 </div>
 
 <!-- Modal to add new task -->
-<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
@@ -237,6 +247,30 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
         <button type="button" class="btn btn-primary" id="modalSaveBtn">Speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit Tasktemplate -->
+<div class="modal" tabindex="-1" id="editModal" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Aufgabenliste</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div class="mt-2 card"  style="padding: 15px 15px 0px 15px;">
+            <div class="input-group mb-3">
+                <span class="input-group-text w-25" id="basic-addon6">Titel</span>
+                <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formMDTitle" id="formMDTitle" aria-describedby="basic-addon7">
+            </div>            
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="button" class="btn btn-primary" id="btnCftSaveMetadata">Speichern</button>
       </div>
     </div>
   </div>
