@@ -13,6 +13,7 @@ use OCP\Util;
 use OCP\AppFramework\Http\JSONResponse;
 use OCP\IGroupManager;
 use OCP\IGroup;
+use OCP\Mail\IMailer;
 
 use \OC\Files\View;
 
@@ -21,15 +22,18 @@ class PageController extends Controller {
 	private $userId;
 	private $userView;
 	protected $groupManager;
+	private $mailer;
 
 	public function __construct(IRequest $request,
 										 $UserId,
-										 IGroupManager $groupManager
+										 IGroupManager $groupManager,
+										 IMailer $mailer
 	) 
 	{
 		parent::__construct(Application::APP_ID, $request);
 		$this->userId = $UserId;
 		$this->groupManager = $groupManager;
+		$this->mailer = $mailer;
 	}
 
 	/**
@@ -162,6 +166,65 @@ class PageController extends Controller {
 		$this->userView = new View('/' . $owner . '/files/');
         $fileInfo = $this->userView->getFileInfo($file);
 		$result = $this->userView->file_put_contents($file,$content);
+
+		$params = array(
+			'result' => 'OK'			
+		);
+
+        return new JSONResponse($params);
+    }
+
+		/**
+	 *
+	 * @NoCSRFRequired
+     * @UseSession 
+	 * @NoAdminRequired
+	 * 
+	 * @param string $emailTemplate
+	 * @param string $receiver
+	 * @param string $fileTitle
+	 * @param string $taskTitle
+     * @return JSONResponse
+	 * 
+	 */
+    public function sendEmailNotification($emailTemplate,$receiver,$fileTitle,$taskTitle,$user) {
+
+		if ($emailTemplate == "NewTask") {
+			$subject = "Neue Aufgabe vom Steuerberater eingetragen";
+			$heading = $subject;
+			$bodytxt = "Ihr Steuerberater hat Ihnen die neue Aufgabe '" . $taskTitle . "' in die '" . $fileTitle . "' Datei eingetragen. Bitte bearbeiten Sie diese bei der nächsten Möglichkeit und reichen Sie ggf. die fehlenden Unterlagen über die Cloud ein."; 
+		}
+		else if ($emailTemplate == "NewReady") {
+			$subject = "Mandant " . $user . " hat eine Aufgabe abgeschlossen";
+			$heading = $subject;
+			$bodytxt = "Ihr Mandant " . $user . " hat die Aufgabe '" . $taskTitle . "' als erledigt gekennzeichnet. Die Details entnehmen Sie bitte der '" . $fileTitle . "' Datei im Mandantenordner " . $user;
+		}
+		else {
+
+			// Return error, wrong email template
+			$params = array(
+				'result' => 'FAILED',
+				'error' => 'Wrong email template'			
+			);
+	
+			return new JSONResponse($params);			
+		}
+
+		$template = $this->mailer->createEMailTemplate('settings.TestEmail', [
+					'receiver' => $receiver
+					]);
+	
+		$template->setSubject($subject);
+		$template->addHeader();
+		$template->addHeading($heading);
+		$template->addBodyText($bodytxt);
+		$template->addFooter();
+	
+		$message = $this->mailer->createMessage();
+		$message->setTo(array($receiver => $receiver));
+		$message->useTemplate($template);
+		$errors = $this->mailer->send($message);
+					
 
 		$params = array(
 			'result' => 'OK'			

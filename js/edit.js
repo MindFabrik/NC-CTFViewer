@@ -4,6 +4,8 @@
 // server (getctf function)
 // *******************************************
 document.addEventListener('DOMContentLoaded', function () {
+
+    // Add Event Listener for Buttons 
     $("#modalSaveBtn").click(function() {
         saveModalData();
     });
@@ -12,10 +14,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     $("#btnCftSaveDesc").click(function() {
         ctfBtnHandlerEditSave();
-    })
+    });
+    $("#btnCftSaveNotification").click(function() {
+        ctfBtnHandlerEMailNotificaiton();
+    });
     $("#btnCloseForm").click(function() {
         closeViewer();
-    });
+    });    
     $('input[type=radio][name=btnradio]').change(function() {
        if (this.value === "Mitarbeiter") {
         $("#ctfMitarbeiterFields").fadeIn(400, function() {
@@ -28,6 +33,22 @@ document.addEventListener('DOMContentLoaded', function () {
           });
        }
     });
+    $("#linkDeactiveEMail").click(function() {
+        $("#formEMailNotification").val("");
+    });
+    const notificationModal = document.getElementById('notificationModal')
+    notificationModal .addEventListener('shown.bs.modal', () => {
+        let editor = $("#fEditor").val();        
+        let json = JSON.parse(JSON.stringify(serverData));
+        if (editor == "YES") {
+            $("#formEMailNotification").val(json.notificationKanzlei);
+        }
+        else {
+            $("#formEMailNotification").val(json.notificationMandant);
+        }
+    })
+
+    // Load CTF document
     getctf();
 });
 
@@ -87,6 +108,7 @@ function saveModalData() {
     // Populate Data and clean up modal
     populateData();
     setctf();
+    ctfSendNotificationNewTask($("#formTitle").val());
     cleanModalData();
     $('#newModal').modal('hide');
 }
@@ -285,6 +307,18 @@ function populateData() {
     else {
         $("#lastEditorKanzlei").html(json.lastEditorKanzlei);
     }
+
+    // EMail Notification
+    var kNotText = "<div class='icon-alert-outline' style='background-position: left; padding-left:20px;'>Keine E-Mail Benachrichtigung aktiv.</div>"
+    if (json.notificationKanzlei) {
+        kNotText = "Benachrichtigungen werden an " + json.notificationKanzlei + " versendet."
+    }
+    $("#kanzleiNotificationText").html(kNotText)
+    var mNotText = "<div class='icon-alert-outline' style='background-position: left; padding-left:20px;'>Keine E-Mail Benachrichtigung aktiv.</div>"
+    if (json.notificationMandant) {
+        mNotText = "Benachrichtigungen werden an " + json.notificationMandant + " versendet."
+    }
+    $("#mandantenNotificationText").html(mNotText)
 
     // Prep Open Tasks
     var countOpen = 0;
@@ -494,6 +528,10 @@ function ctfBtnHandlerDone(taskId) {
             updateModifierData()
             populateData();
             setctf();
+
+            if (json.taskList[index].status === 1) {
+                ctfSendNotificationNewReady(json.taskList[index].taskTitle);
+              }
         },
         true
     )
@@ -561,6 +599,10 @@ function ctfBtnHandlerUndo(taskId) {
             updateModifierData()
             populateData();
             setctf();
+
+            if (json.taskList[index].status === 0) {
+              ctfSendNotificationNewTask(json.taskList[index].taskTitle);
+            }
         },
         true
     )
@@ -666,6 +708,81 @@ function ctfBtnHandlerEditSave() {
      populateData();
      setctf();
      
+}
+
+// **************************************
+// Handler to save email notificaiton
+// **************************************
+function ctfBtnHandlerEMailNotificaiton() {
+    let editor = $("#fEditor").val();
+    let email = $("#formEMailNotification").val();
+    $('#notificationModal').modal('hide');   
+
+    // Load serverData
+    let json = JSON.parse(JSON.stringify(serverData));
+    if (editor == "YES") {
+        json.notificationKanzlei = email;
+    }
+    else {
+        json.notificationMandant = email;
+    }
+
+    // Populate
+    serverData = json;
+    updateModifierData()
+    populateData();
+    setctf();
+    
+}
+
+// ***************************************
+// send notification
+// ***************************************
+function ctfSendNotificationNewTask(taskTitle) {    
+    let editor = $("#fEditor").val();
+    let json = JSON.parse(JSON.stringify(serverData));
+
+    if (editor == "YES") {
+        if (json.notificationMandant) {
+            console.info("Send EMail notification - New Task to Mandant...");
+            sendEmailNotification("NewTask",json.notificationMandant,json.title,taskTitle);  
+        }        
+    }
+}
+function ctfSendNotificationNewReady(taskTitle) {    
+    let editor = $("#fEditor").val();
+    let json = JSON.parse(JSON.stringify(serverData));
+
+    if (editor == "NO") {
+        if (json.notificationKanzlei) {
+            console.info("Send EMail notification - New Ready to Kanzlei...");
+            sendEmailNotification("NewReady",json.notificationKanzlei,json.title,taskTitle);   
+        }           
+    }
+}
+function sendEmailNotification(emailTemplate,receiver,fileTitle,taskTitle) {
+    $.post(
+        OC.generateUrl('/apps/ctfviewer/json/sendEmailNotification'),
+        {
+            emailTemplate: emailTemplate,
+            receiver: receiver,
+            fileTitle: fileTitle,
+            taskTitle: taskTitle,
+            user: $("#fUsername").val(),
+        }
+    ).done(function (data) {                        
+        if (data.result == "OK") {           
+            console.info("Successful added CTF email notification.")
+        }
+        else {
+            // Save failed with error
+            console.error("CTF email notificaiton failed: " + data);
+        }       
+    })
+    .fail(function (data) {
+        // Report Error
+        console.error("CTF email notificaiton failed: " + data);
+    });
 }
 
 

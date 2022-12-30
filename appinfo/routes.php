@@ -17,5 +17,6 @@ return [
 		['name' => 'page#edit', 'url' => '/edit', 'verb' => 'GET'],
 		['name' => 'page#getctf', 'url' => '/json/getctf', 'verb' => 'POST'],
 		['name' => 'page#setctf', 'url' => '/json/setctf', 'verb' => 'POST'],
+		['name' => 'page#sendEmailNotification', 'url' => '/json/sendEmailNotification', 'verb' => 'POST'],		
 	]
 ];

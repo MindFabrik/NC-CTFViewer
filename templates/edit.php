@@ -59,7 +59,7 @@
             <!-- Summary -->
             <div class="row">
                 <div class="col-6">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title <?php if ($_['editor'] == "NO") { ?>icon-tag <?php } ?>">Mandanten</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Bearbeitungsstand</h6>
@@ -81,12 +81,23 @@
                                         <p id="lastEditorMandant"></p>
                                     </div>
                                 </div>
+                                 <div class="clearfix"></div>
+                                <div class="mt-3">
+                                    <small style="color:gray">
+                                        <p id="mandantenNotificationText" style="margin-bottom: 0px;"></p>
+                                        <?php if ($_['editor'] == "NO") { ?>
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#notificationModal">
+                                            E-Mail Benachrichtigungen verwalten
+                                        </a>
+                                    <?php } ?>
+                                    </small>                                         
+                                </div>                                
                             </p>
                         </div>
                     </div>
                 </div>
                 <div class="col-6">
-                    <div class="card">
+                    <div class="card h-100">
                         <div class="card-body">
                             <h5 class="card-title <?php if ($_['editor'] == "YES") { ?>icon-tag <?php } ?>">Steuerkanzlei</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Bearbeitunsstand</h6>
@@ -107,6 +118,18 @@
                                     <div class="float-end" style="height:25px;">
                                         <p id="lastEditorKanzlei"></p>
                                     </div>
+                                </div>
+                         
+                                <div class="clearfix"></div>
+                                <div class="mt-3">
+                                    <?php if ($_['editor'] == "YES") { ?>
+                                    <small style="color:gray">
+                                        <p id="kanzleiNotificationText" style="margin-bottom: 0px;"></p>                                                                   
+                                        <a href="#" data-bs-toggle="modal" data-bs-target="#notificationModal">
+                                        E-Mail Benachrichtigungen verwalten
+                                    </a>
+                                    </small>     
+                                    <?php } ?>
                                 </div>
                             </p>
                         </div>
@@ -296,6 +319,34 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
         <button type="button" class="btn btn-primary" id="btnCftSaveDesc">Speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Enable Email notification -->
+<div class="modal fade" data-bs-backdrop="static" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="notificationModalLabel">E-Mail Benachrichtigung</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mt-2 card" style="padding: 15px 15px 0px 15px;">
+            <div class="input-group mb-3">
+                <p>Tragen Sie bitte Ihre E-Mail Adresse ein, wenn Sie über eine neue Aufgabe informiert werden wollen. Lassen Sie dieses Feld leer, wenn Sie keine Benachrichtigungen erhalten möchten.</p>
+                <span class="input-group-text w-25" id="basic-addon9">E-Mail</span>
+                <input type="email" class="form-control" placeholder="" autocomplete="off" aria-label="formEMailNotification" id="formEMailNotification" aria-describedby="basic-addon9">               
+            </div>            
+            <div class="mb-2">
+                <a href="#" id="linkDeactiveEMail">E-Mail Benachrichtigungen deaktivieren</a>
+            </div>
+        </div>      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="button" class="btn btn-primary" id="btnCftSaveNotification">Speichern</button>
       </div>
     </div>
   </div>
