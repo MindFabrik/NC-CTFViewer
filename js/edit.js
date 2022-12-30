@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#btnCftSaveMetadata").click(function() {
         saveMetadata();
     });
+    $("#btnCftSaveDesc").click(function() {
+        ctfBtnHandlerEditSave();
+    })
     $("#btnCloseForm").click(function() {
         closeViewer();
     });
@@ -52,6 +55,7 @@ function saveModalData() {
             "taskType": "Mitarbeiter",
             "taskDate": $("#formDate").val(),
             "taskDesciption": $("#formDescription").val(),
+            "taskDesciption2": "",
             "maPN":$("#formPN").val(),
             "maName":$("#formName").val(),
             "maVorname":$("#formVorname").val(),
@@ -68,6 +72,7 @@ function saveModalData() {
             "taskType": "Betrieb",
             "taskDate": $("#formDate").val(),
             "taskDesciption": $("#formDescription").val(),
+            "taskDesciption2": "",
             "maPN":"",
             "maName":"",
             "maVorname":"",
@@ -315,14 +320,32 @@ function populateData() {
         }
         t.content.querySelector('.ctfTaskDate').textContent = formText;
 
-       // Add Description           
-       t.content.querySelector('.ctfTaskDescription').textContent = element.taskDesciption;
-       
+      
+       // Add Description        
+       const descKanzlei = element.taskDesciption;
+       const descMandant = element.taskDesciption2;       
+       if (descKanzlei) {
+         t.content.querySelector('.ctfTaskDescriptionTitle').textContent = "Bemerkung Steuerberater";
+         t.content.querySelector('.ctfTaskDescription').textContent = descKanzlei
+       }
+       else {
+         t.content.querySelector('.ctfTaskDescriptionTitle').textContent = "";
+         t.content.querySelector('.ctfTaskDescription').textContent = "";
+       }
+       if (descMandant) {
+         t.content.querySelector('.ctfTaskDescriptionTitle2').textContent = "Bemerkung Mandant";         
+         t.content.querySelector('.ctfTaskDescription2').textContent = descMandant;     
+       }
+       else {
+        t.content.querySelector('.ctfTaskDescriptionTitle2').textContent = "";         
+        t.content.querySelector('.ctfTaskDescription2').textContent = "";    
+       }
 
         // Add Parameter
         t.content.querySelector('.ctfBtnDone').dataset.taskid = element.id;
         t.content.querySelector('.ctfBtnUndo').dataset.taskid = element.id;
         t.content.querySelector('.ctfBtnRemove').dataset.taskid = element.id;
+        t.content.querySelector('.ctfBtnEdit').dataset.taskid = element.id;
         
         if (element.status == 0) {
             countOpen = countOpen + 1;
@@ -377,6 +400,9 @@ function populateData() {
             else if (button.dataset.ctfaction == "undo") {
                 ctfBtnHandlerUndo(button.dataset.taskid);
             }
+            else if (button.dataset.ctfaction == "edit") {
+                ctfBtnHandlerEdit(button.dataset.taskid);
+            }
             
     })
 })
@@ -392,6 +418,7 @@ function applyViewFilter() {
     // Disable move to next for all in archived area
     $(".ctfBtnDone","#tasksDone").css("display","none");
     $(".ctfBtnUndo","#tasksOpen").css("display","none");
+    $(".ctfBtnEdit","#tasksDone").css("display","none");
 
     // Hide elements for Mandanten
     if ($("#fEditor").val() != "YES") { 
@@ -400,6 +427,7 @@ function applyViewFilter() {
         $(".ctfBtnRemove","#tasksDone").css("display","none");
         $(".ctfBtnDone","#tasksReady").css("display","none");
         $(".ctfBtnUndo","#tasksDone").css("display","none");
+        $(".ctfBtnEdit","#tasksReady").css("display","none");    
     }
     else {
         $("#collapseDone").collapse("show");
@@ -576,3 +604,68 @@ function ctfBtnHandlerRemove(taskId) {
         true
     )
 }
+
+// **************************************
+// Handler to edit description
+// **************************************
+function ctfBtnHandlerEdit(taskId) {
+    
+    // Prep Vars
+    $('#modalDataDescPos').val(taskId);
+    let editor = $("#fEditor").val();
+
+    // Load serverData
+    let json = JSON.parse(JSON.stringify(serverData));
+     
+    // Find pos in tasklist
+    let index = json.taskList.findIndex(function(item, i){
+        return item.id === taskId;
+    });
+
+    // Populate with existing data
+    if (editor === "YES") {
+        $("#formDescChange").val(json.taskList[index].taskDesciption);
+    }
+    else {
+        $("#formDescChange").val(json.taskList[index].taskDesciption2);
+    }
+
+    // Display Modal
+    $('#descModal').modal('show');   
+}
+function ctfBtnHandlerEditSave() {
+
+    // Read and reset variables
+    let taskId = $('#modalDataDescPos').val();   
+    let editor = $("#fEditor").val();
+     $('#modalDataDescPos').val("");
+
+    // Load serverData
+    let json = JSON.parse(JSON.stringify(serverData));
+     
+    // Find pos in tasklist
+    let index = json.taskList.findIndex(function(item, i){
+        return item.id === taskId;
+    });
+
+    // Change data
+    if (editor === "YES") {
+        json.taskList[index].taskDesciption = $("#formDescChange").val();
+    }
+    else {
+        json.taskList[index].taskDesciption2 = $("#formDescChange").val();
+    }
+
+    // Reset Form
+    $('#descModal').modal('hide');   
+    $("#formDescChange").val("");
+     
+    // Populate
+     serverData = json;
+     updateModifierData()
+     populateData();
+     setctf();
+     
+}
+
+

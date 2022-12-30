@@ -263,7 +263,7 @@
       <div class="modal-body">
       <div class="mt-2 card"  style="padding: 15px 15px 0px 15px;">
             <div class="input-group mb-3">
-                <span class="input-group-text w-25" id="basic-addon6">Titel</span>
+                <span class="input-group-text w-25" id="basic-addon7">Titel</span>
                 <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formMDTitle" id="formMDTitle" aria-describedby="basic-addon7">
             </div>            
         </div>
@@ -271,6 +271,31 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
         <button type="button" class="btn btn-primary" id="btnCftSaveMetadata">Speichern</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit Description -->
+<div class="modal" tabindex="-1" id="descModal" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Bemerkung ändern/hinzufügen</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <input type="hidden" id="modalDataDescPos"/>      
+      <div class="modal-body">
+      <div class="mt-2 card"  style="padding: 15px 15px 0px 15px;">
+            <div class="input-group mb-3">
+                <span class="input-group-text w-25" id="basic-addon8">Bemerkung</span>
+                <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formDescChange" id="formDescChange" aria-describedby="basic-addon8">
+            </div>            
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="button" class="btn btn-primary" id="btnCftSaveDesc">Speichern</button>
       </div>
     </div>
   </div>
@@ -286,14 +311,14 @@
                     <div style="margin-top:-10px;">
                         <span class="badge rounded-pill text-bg-secondary mb-2 ctfTaskType">Unknown</span>
                         <span class="ctfTaskDate"></span>
-                    </div>
-                    <div>
-                    <p class="fw-light ctfTaskDescription"></p>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="float-end" style="margin-top:-6px;">
                    <button class="btn btn-outline-secondary btn-sm ctfBtnDone" data-ctfaction="done">
                         <div class="icon-checkmark"></div>
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm ctfBtnEdit" data-ctfaction="edit">
+                        <div class="icon-rename"></div>
                     </button>
                     <button class="btn btn-outline-secondary btn-sm ctfBtnUndo" data-ctfaction="undo">
                         <div class="icon-history"></div>
@@ -303,8 +328,15 @@
                     </button>
                 </div>
             </div>
-            <div class="card mb-2" style="padding: 15px 15px 0px 15px;">
-                <small style="color:gray;">
+            <div class="mt-2">
+                <p class="ctfTaskDescriptionTitle"></p>
+                <p class="fw-light ctfTaskDescription" style="margin-top:-15px"></p>
+                <p class="ctfTaskDescriptionTitle2"></p>
+                <p class="fw-light ctfTaskDescription2"style="margin-top:-15px"></p>
+            </div>
+            <hr/>
+            <div class="mb-1">
+                <small style="color:lightgray;">
                     <p class="ctfMetadata"></p>
                 </small>
             </div>
