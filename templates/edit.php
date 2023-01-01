@@ -1,6 +1,7 @@
 <?php  
   $urlGenerator = \OC::$server->getURLGenerator();
   $nonce = \OC::$server->getContentSecurityPolicyNonceManager()->getNonce();
+  $scriptjquery = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/jquery/jquery-3.6.3.min.js');
   $scriptsrc = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/edit.js');
   $scriptbs = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js');
   $stylebs = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/bootstrap-5.2.3-dist/css/bootstrap.min.css');
@@ -8,6 +9,7 @@
 ?>
 
 <link href="<?php p($stylebs)?>" rel="stylesheet">
+<script nonce="<?php p($nonce)?>" src="<?php p($scriptjquery)?>?v=<?php p($version) ?>"></script>
 <script nonce="<?php p($nonce)?>" src="<?php p($scriptsrc)?>?v=<?php p($version) ?>"></script>
 <script nonce="<?php p($nonce)?>" src="<?php p($scriptbs)?>?v=<?php p($version) ?>"></script>
 

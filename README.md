@@ -27,7 +27,6 @@ The current version still has the following limitations, which will be fixed in 
 - The E-Mail notification text is currently hard-coded
 - The names 'Steuerberater/Kanzlei' and 'Mandant' are currently hard-coded and cannot be translated to other businesses.
 - No multi-language support
-- Requires still global JQuery
 
 ## Support
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
