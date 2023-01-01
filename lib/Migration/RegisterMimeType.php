@@ -6,6 +6,13 @@ use OCP\Migration\IOutput;
 use OCP\Migration\IRepairStep;
 use OCP\ILogger;
 
+// ----------------------------------------------
+// This Class is called from the repair action
+// of NC, when the app is updated or installed.
+// It will register a new MIME type for the CTF
+// files
+// ----------------------------------------------
+
 class RegisterMimeType implements IRepairStep {
     protected $logger;
     private $customMimetypeMapping;

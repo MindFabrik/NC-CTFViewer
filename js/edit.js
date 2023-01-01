@@ -1,3 +1,14 @@
+/*
+    The edit.js javascript will be loaded from the edit.php template
+    and apply the full logic of displaying and modifying of a CTF file.
+    Every change is saved immediately. A queue is used for this purpose.
+
+    The context of a CTF file is requested via the json/getctf call. To save
+    the file, the script will use the json/setctf call.
+
+*/
+
+
 // *******************************************
 // -------------  PAGE  READY ----------------
 // Set event listener and request data from 

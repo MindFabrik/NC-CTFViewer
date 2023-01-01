@@ -1,3 +1,10 @@
+// ----------------------------------------------------------
+// Define Functions / Actions how will be used during 
+// registering into NC. 
+// ----------------------------------------------------------
+
+// Function to register action and define default 
+// Read sharingToken and file to open /ctfviewer/edit request
 function editCTF(file, data) {
 
     // Open CTF clicked, building parameter
@@ -20,6 +27,8 @@ function editCTF(file, data) {
     window.location.href = location;
 }
 
+// Function to register new file entry in NC menu
+// (All users can add a new CTF file)
 let NewFileMenuPlugin = {
 
 	attach: function(menu) {
@@ -56,12 +65,23 @@ let NewFileMenuPlugin = {
 	}
 };
 
+// If a new CTF file is created, this function is called to perform 
+// next steps. - Currently not in use
 function onCtfEditorTrigger (filename, context) {
-    console.warn("****");
-    console.warn(filename);
-    console.warn(context);
+	// NOT IN USE
 }
 
+
+
+// ----------------------------------------------------------
+// Registering 
+// > Context Menu for CTF files
+// > Default Action for CTF files
+// > Add new CTF file menu
+// ----------------------------------------------------------
+
+
+// Register Action in Nextcloud (add entry in context menu of a CTF file)
 OCA.Files.fileActions.registerAction({
     name: 'ctfviewerOpen',
     displayName: 'Aufgaben anzeigen',
@@ -69,6 +89,8 @@ OCA.Files.fileActions.registerAction({
     permissions: OC.PERMISSION_READ,
     iconClass: 'icon-projects',
     actionHandler: editCTF,
-})
+});
+// Define previous defined action as default action for CTF file
 OCA.Files.fileActions.setDefault('application/ctf', 'ctfviewerOpen');
+// Register new file entry for CTF files
 OC.Plugins.register('OCA.Files.NewFileMenu', NewFileMenuPlugin);

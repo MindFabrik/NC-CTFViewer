@@ -41,6 +41,12 @@ class PageController extends Controller {
 	 * @NoCSRFRequired
 	 */
 	public function index(): TemplateResponse {
+		
+		// ----------------------------------------------
+		// The index page is currently not in use and 
+		// is a placeholder
+		// ----------------------------------------------
+		
 		Util::addScript(Application::APP_ID, 'ctfviewer-main');
 
 		return new TemplateResponse(Application::APP_ID, 'main');
@@ -52,6 +58,15 @@ class PageController extends Controller {
 	 */
 	public function edit($token, $file)
     {
+
+		// ----------------------------------------------
+		// The Edit page is the main entry when the user
+		// is opening a CTF file. It will identify if the
+		// user is part of the enterprise or a customer
+		// (based on a NC group membership). In addition
+		// the page will provide some page parameter for 
+		// the edit.js script.
+		// ----------------------------------------------
 
 		$usrInfo = \OC::$server->getUserSession()->getUser();
 		$grpInfo = $this->groupManager->getUserGroups($usrInfo);
@@ -112,6 +127,13 @@ class PageController extends Controller {
 	 */
     public function getctf($owner,$file) {
 
+		// ----------------------------------------------
+		// This json call returns the context of a CTF
+		// file with additional metadata.
+		// If the CTF file is empty, a CTF template 
+		// will be returned instead.
+		// ----------------------------------------------
+
 		if (is_null($owner) || $owner === '') {
             $owner = \OC::$server->getUserSession()->getUser()->getUID();
         }
@@ -158,6 +180,10 @@ class PageController extends Controller {
 	 */
     public function setctf($owner,$file,$content) {
 
+		// ----------------------------------------------
+		// This json call receives the content of a CTF
+		// file to save it into the NC folder.
+		// ----------------------------------------------
 
 		if (is_null($owner) || $owner === '') {
             $owner = \OC::$server->getUserSession()->getUser()->getUID();
@@ -174,7 +200,7 @@ class PageController extends Controller {
         return new JSONResponse($params);
     }
 
-		/**
+	/**
 	 *
 	 * @NoCSRFRequired
      * @UseSession 
@@ -189,6 +215,17 @@ class PageController extends Controller {
 	 */
     public function sendEmailNotification($emailTemplate,$receiver,$fileTitle,$taskTitle,$user) {
 
+		// ----------------------------------------------
+		// This json call is used from the edit.js script
+		// to send a notificiation to the user, when e.g.,
+		// a new tasks is defined.
+		// The logic, when a notification is pushed, is 
+		// part of the edit.js script.
+		// ----------------------------------------------
+
+		// ----------------------------------------------
+		// Prepare template
+		// ----------------------------------------------
 		if ($emailTemplate == "NewTask") {
 			$subject = "Neue Aufgabe vom Steuerberater eingetragen";
 			$heading = $subject;
@@ -210,6 +247,9 @@ class PageController extends Controller {
 			return new JSONResponse($params);			
 		}
 
+		// ----------------------------------------------
+		// Send email
+		// ----------------------------------------------
 		$template = $this->mailer->createEMailTemplate('settings.TestEmail', [
 					'receiver' => $receiver
 					]);
