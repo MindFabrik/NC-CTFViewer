@@ -5,7 +5,7 @@
   $scriptsrc = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/edit.js');
   $scriptbs = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js');
   $stylebs = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/bootstrap-5.2.3-dist/css/bootstrap.min.css');
-  $version = \OCP\App::getAppVersion('ctfviewer'); 
+  $version = \OC::$server->getAppManager()->getAppVersion('ctfviewer');
 ?>
 
 <link href="<?php p($stylebs)?>" rel="stylesheet">
