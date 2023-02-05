@@ -423,6 +423,7 @@
             <hr/>
             <div class="mb-1">
                 <small>
+                    <strong><p class="ctfHistoryTitle"></p></strong>
                     <p class="ctfHistory"></p>
                 </small>
                 <small style="color:lightgray;">

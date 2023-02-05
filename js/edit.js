@@ -157,9 +157,9 @@ function getModifierInformation(input) {
     var sUsername = $("#fUsername").val();
 
     if ($("#fEditor").val() == "YES") {
-       retVal = "Kanzlei (" + sUsername + ") " + timeStr + ": " + input;
+       retVal = "Kanzlei (" + sUsername + "), " + timeStr + ": " + input;
     } else {
-       retVal = "Mandant (" + sUsername + ") " + timeStr + ": " + input;
+       retVal = "Mandant (" + sUsername + "), " + timeStr + ": " + input;
     }
 
     return retVal;
@@ -415,7 +415,15 @@ function populateData() {
         t.content.querySelector('.ctfBtnEdit').dataset.taskid = element.id;
 
          // Output history
-         t.content.querySelector('.ctfHistory').textContent = element.history.join("\r\n");
+         if (element.history) {
+            t.content.querySelector('.ctfHistoryTitle').textContent = "Historie:";
+            t.content.querySelector('.ctfHistory').textContent = element.history.join("\r\n");
+         }
+         else {
+            t.content.querySelector('.ctfHistoryTitle').textContent = "";
+            t.content.querySelector('.ctfHistory').textContent = "";
+         }
+         
         
         if (element.status == 0) {
             countOpen = countOpen + 1;
