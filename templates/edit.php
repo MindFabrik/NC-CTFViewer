@@ -13,6 +13,39 @@
 <script nonce="<?php p($nonce)?>" src="<?php p($scriptsrc)?>?v=<?php p($version) ?>"></script>
 <script nonce="<?php p($nonce)?>" src="<?php p($scriptbs)?>?v=<?php p($version) ?>"></script>
 
+<style>
+    .ctfbg {
+        background: white;
+        border-radius: 10px;
+        padding: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 100vh;
+    }
+
+    .modal-backdrop {
+        display: none;
+        z-index: 1101 !important;
+        
+    }
+
+    .modal-content {
+        margin: 2px auto;
+        z-index: 1101 !important;
+    }
+    .modal {
+        background: rgba(100,100,100,.5);
+    }
+
+    input[id^='oc-dialog-'] {
+        width: 100%;
+    }
+
+    .ctfHistory {
+        white-space: pre;
+        color: gray;
+    }
+</style>
 
 <div>
   <input type="hidden" value="<?php p($_['owner'])?>" id="fOwner" />
@@ -22,7 +55,7 @@
   <input type="hidden" value="<?php p($_['username'])?>" id="fUsername" />
   <input type="hidden" value="<?php p($_['dateplaceholder'])?>" id="fDatePlaceholder" />
 </div>
-<div class="container">
+<div class="container ctfbg">
     <div class="row">
         <div id="ctfLoading" class="mt-5">
             <div class="d-flex align-items-center">
@@ -389,6 +422,9 @@
             </div>
             <hr/>
             <div class="mb-1">
+                <small>
+                    <p class="ctfHistory"></p>
+                </small>
                 <small style="color:lightgray;">
                     <p class="ctfMetadata"></p>
                 </small>

@@ -144,6 +144,28 @@ function updateModifierData() {
 
 }
 
+// ************************************************
+// Get Modifier Information (for comment tracking)
+// ************************************************
+function getModifierInformation(input) {
+
+    const currentDate = new Date();
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    const timeStr = currentDate.toLocaleDateString('de-DE', options);
+
+    var retVal = "";
+    var sUsername = $("#fUsername").val();
+
+    if ($("#fEditor").val() == "YES") {
+       retVal = "Kanzlei (" + sUsername + ") " + timeStr + ": " + input;
+    } else {
+       retVal = "Mandant (" + sUsername + ") " + timeStr + ": " + input;
+    }
+
+    return retVal;
+
+}
+
 // *******************************************
 // Function to reset all modal data
 // *******************************************
@@ -391,6 +413,9 @@ function populateData() {
         t.content.querySelector('.ctfBtnUndo').dataset.taskid = element.id;
         t.content.querySelector('.ctfBtnRemove').dataset.taskid = element.id;
         t.content.querySelector('.ctfBtnEdit').dataset.taskid = element.id;
+
+         // Output history
+         t.content.querySelector('.ctfHistory').textContent = element.history.join("\r\n");
         
         if (element.status == 0) {
             countOpen = countOpen + 1;
@@ -410,6 +435,10 @@ function populateData() {
             var clone = document.importNode(t.content, true); 
             document.querySelector('#tasksDone').appendChild(clone);
         }
+
+       
+
+
     });
 
     // Add NoTasks template when needed
@@ -521,18 +550,17 @@ function ctfBtnHandlerDone(taskId) {
         formText = "Unbekannt";
     }
 
-    OC.dialogs.confirmDestructive(
+    OC.dialogs.prompt(
         formText,
         "Erledigt",
-        {
-            type: OC.dialogs.YES_NO_BUTTONS,
-            confirm: "JA",
-            confirmClasses: 'success',
-            cancel: "Nein",
-        },
-        (result) => {
+        (result, input) => {
             
             if (!result) {json=""; return;}
+            if (input) {
+                if (typeof json.taskList[index].history === 'undefined')
+                    json.taskList[index].history = [];
+                json.taskList[index].history.push(getModifierInformation(input));
+            }
            
             // Populate
             serverData = json;
@@ -544,7 +572,9 @@ function ctfBtnHandlerDone(taskId) {
                 ctfSendNotificationNewReady(json.taskList[index].taskTitle);
               }
         },
-        true
+        true,
+        "Kommentar",
+        false
     )
 
 }
@@ -592,18 +622,17 @@ function ctfBtnHandlerUndo(taskId) {
         formText = "Soll die Aufgabe '" + json.taskList[index].taskTitle + "' wieder als Offen gekennzeichnet werden?"
     }
 
-    OC.dialogs.confirmDestructive(
+    OC.dialogs.prompt(
         formText,
         "Wiederherstellen",
-        {
-            type: OC.dialogs.YES_NO_BUTTONS,
-            confirm: "JA",
-            confirmClasses: 'success',
-            cancel: "Nein",
-        },
-        (result) => {
+        (result,input) => {
             
             if (!result) {json = ""; return;}
+            if (input) {
+                if (typeof json.taskList[index].history === 'undefined')
+                    json.taskList[index].history = [];
+                json.taskList[index].history.push(getModifierInformation(input));
+            }
            
             // Populate
             serverData = json;
@@ -615,7 +644,9 @@ function ctfBtnHandlerUndo(taskId) {
               ctfSendNotificationNewTask(json.taskList[index].taskTitle);
             }
         },
-        true
+        true,
+        "Kommentar",
+        false
     )
 
 }
