@@ -9,7 +9,7 @@
     <name>CTF Viewer (Kanzlei Aufgaben)</name>
     <summary>Editor for CTF Files</summary>
     <description><![CDATA[Editor for CTF Files]]></description>
-    <version>0.2.4</version>
+    <version>0.2.5</version>
     <licence>agpl</licence>
     <author mail="support@mindfabrik.de" homepage="https://www.mindfabrik.de">MindFabrik UG</author>
     <namespace>CTFViewer</namespace>
