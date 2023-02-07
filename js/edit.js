@@ -59,6 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     })
 
+    // Add AutoComplete
+    document.addEventListener('DOMContentLoaded', e => {
+        $('#formMDTitle').autocomplete()
+    }, false);
+
     // Load CTF document
     getctf();
 });

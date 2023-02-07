@@ -6,12 +6,14 @@
   $scriptbs = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js');
   $stylebs = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/bootstrap-5.2.3-dist/css/bootstrap.min.css');
   $version = \OC::$server->getAppManager()->getAppVersion('ctfviewer');
+  $scriptbsac = \OC::$server->getURLGenerator()->linkTo('ctfviewer', 'js/bootstrap-autocomplete/js/bootstrap-autocomplete.min.js');
 ?>
 
 <link href="<?php p($stylebs)?>" rel="stylesheet">
 <script nonce="<?php p($nonce)?>" src="<?php p($scriptjquery)?>?v=<?php p($version) ?>"></script>
-<script nonce="<?php p($nonce)?>" src="<?php p($scriptsrc)?>?v=<?php p($version) ?>"></script>
 <script nonce="<?php p($nonce)?>" src="<?php p($scriptbs)?>?v=<?php p($version) ?>"></script>
+<script nonce="<?php p($nonce)?>" src="<?php p($scriptbsac)?>?v=<?php p($version) ?>"></script>
+<script nonce="<?php p($nonce)?>" src="<?php p($scriptsrc)?>?v=<?php p($version) ?>"></script>
 
 <style>
     .ctfbg {
@@ -322,7 +324,12 @@
       <div class="mt-2 card"  style="padding: 15px 15px 0px 15px;">
             <div class="input-group mb-3">
                 <span class="input-group-text w-25" id="basic-addon7">Titel</span>
-                <input type="text" class="form-control" placeholder="" autocomplete="off" aria-label="formMDTitle" id="formMDTitle" aria-describedby="basic-addon7">
+                <input type="text" class="form-control" placeholder="" list="list-taskname" autocomplete="off" aria-label="formMDTitle" id="formMDTitle" aria-describedby="basic-addon7">
+                <datalist id="list-taskname">
+                    <option>Fehlende Lohn-Abrechnungsinformationen</option>
+                    <option>Buchführung</option>
+                    <option>Jahresabschluss</option>
+                </datalist>
             </div>            
         </div>
       </div>
